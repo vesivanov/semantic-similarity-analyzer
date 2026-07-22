@@ -70,7 +70,7 @@ A powerful, privacy-focused web application that analyzes semantic similarity be
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/semantic-similarity-analyzer.git
+   git clone https://github.com/vesivanov/semantic-similarity-analyzer.git
    cd semantic-similarity-analyzer
    ```
 
@@ -323,10 +323,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 💬 Support
 
-- 📧 **Email**: [your-email@example.com]
-- 🐛 **Issues**: [GitHub Issues](https://github.com/yourusername/semantic-similarity-analyzer/issues)
-- 💡 **Feature Requests**: [GitHub Discussions](https://github.com/yourusername/semantic-similarity-analyzer/discussions)
-- 📖 **Documentation**: [Wiki](https://github.com/yourusername/semantic-similarity-analyzer/wiki)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/vesivanov/semantic-similarity-analyzer/issues)
+- 💡 **Feature Requests**: [GitHub Discussions](https://github.com/vesivanov/semantic-similarity-analyzer/discussions)
+- 📖 **Documentation**: [Wiki](https://github.com/vesivanov/semantic-similarity-analyzer/wiki)
 
 ## 🔮 Roadmap
 
