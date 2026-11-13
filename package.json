@@ -1,61 +1,30 @@
 {
-  "name": "rest-express",
-  "version": "1.0.0",
+  "name": "semantic-similarity-analyzer",
+  "version": "2.0.0",
+  "private": true,
   "type": "module",
   "license": "MIT",
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:client",
-    "build:client": "vite build",
+    "build": "vite build",
     "preview": "vite preview",
-    "check": "tsc",
-    "clean": "rm -rf dist node_modules/.vite",
-    "security-check": "npm audit"
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "node scripts/e2e.mjs"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.10.0",
-    "@radix-ui/react-collapsible": "^1.1.4",
-    "@radix-ui/react-dialog": "^1.1.7",
-    "@radix-ui/react-label": "^2.1.3",
-    "@radix-ui/react-progress": "^1.1.3",
-    "@radix-ui/react-radio-group": "^1.2.4",
-    "@radix-ui/react-slot": "^1.2.0",
-    "@radix-ui/react-tabs": "^1.1.4",
-    "@radix-ui/react-toast": "^1.2.7",
-    "@radix-ui/react-tooltip": "^1.2.0",
-    "@tanstack/react-query": "^5.60.5",
-    "@types/dompurify": "^3.0.5",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "dompurify": "^3.2.6",
-    "lucide-react": "^0.453.0",
-    "openai": "^5.8.2",
+    "@huggingface/transformers": "^3.8.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-hook-form": "^7.55.0",
-    "tailwind-merge": "^2.6.0",
-    "tailwindcss-animate": "^1.0.7",
-    "wouter": "^3.3.5",
-    "zod": "^3.24.2",
-    "zod-validation-error": "^3.4.0"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@replit/vite-plugin-cartographer": "^0.2.7",
-    "@replit/vite-plugin-runtime-error-modal": "^0.0.3",
-    "@rollup/rollup-linux-x64-gnu": "^4.44.2",
-    "@tailwindcss/typography": "^0.5.15",
-    "@tailwindcss/vite": "^4.1.3",
-    "@types/node": "20.16.11",
-    "@types/react": "^18.3.11",
+    "@types/node": "^20.16.11",
+    "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
-    "@vitejs/plugin-react": "^4.3.2",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.47",
-    "tailwindcss": "^3.4.17",
-    "typescript": "5.6.3",
-    "vite": "^5.4.19"
-  },
-  "optionalDependencies": {
-    "bufferutil": "^4.0.8"
+    "@vitejs/plugin-react": "^4.3.4",
+    "playwright-core": "^1.65.1",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.8"
   }
 }

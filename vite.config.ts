@@ -1,40 +1,23 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import path from "path";
+import path from "node:path";
 
 export default defineConfig({
   plugins: [react()],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./client/src"),
-      "@shared": path.resolve(__dirname, "./shared"),
-    },
-  },
+  resolve: { alias: { "@": path.resolve(__dirname, "./client/src") } },
   root: path.resolve(__dirname, "client"),
   build: {
-    outDir: path.resolve(__dirname, "dist/public"),
+    outDir: path.resolve(__dirname, "dist"),
     emptyOutDir: true,
+    // The embedding runtime is large and only needed once an analysis starts,
+    // so it stays a chunk of its own instead of joining the entry bundle.
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
-          'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-tooltip'],
-          'openai': ['openai']
-        }
-      }
-    }
+        manualChunks: (id) => (id.includes("@huggingface/transformers") ? "transformers" : undefined),
+      },
+    },
   },
-  server: {
-    port: 3000,
-    strictPort: true,
-    host: true,
-    proxy: {
-      '/openai': {
-        target: 'https://api.openai.com',
-        changeOrigin: true,
-        secure: true,
-        rewrite: (path) => path.replace(/^\/openai/, '')
-      }
-    }
-  }
+  optimizeDeps: { exclude: ["@huggingface/transformers"] },
+  worker: { format: "es" },
+  server: { port: 3000, host: true },
 });
