@@ -120,3 +120,19 @@ footer { border-top: 1px solid var(--hair); margin-top: 56px; padding-top: 18px;
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   h1 { margin-top: 28px; }
 }
+
+/* A score reads as one thing: the bar and its number in the same cell, so a
+   column header can never drift away from the value underneath it. */
+.score { display: flex; align-items: center; gap: 10px; }
+.score .bar { flex: 1 1 auto; }
+.score b { flex: 0 0 44px; text-align: right; font: 500 13px/1 var(--mono); }
+
+button.term {
+  background: none; border: 0; padding: 0; font: inherit; font-weight: 600;
+  color: var(--ink); text-align: left; cursor: pointer;
+  text-decoration: underline; text-decoration-color: var(--hair); text-underline-offset: 3px;
+}
+button.term:hover { text-decoration-color: var(--ink); }
+
+.gap-behind { color: var(--accent); font-family: var(--mono); }
+.gap-ahead { color: var(--good); font-family: var(--mono); }

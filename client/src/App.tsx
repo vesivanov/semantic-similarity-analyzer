@@ -229,58 +229,73 @@ export default function App() {
               <thead>
                 <tr>
                   <th>Keyword</th>
-                  <th className="num">You</th>
-                  <th className="barcell" aria-label="your match" />
+                  <th>Your match</th>
                   <th>Verdict</th>
-                  <th className="num">Them</th>
-                  <th className="barcell" aria-label="competitor match" />
+                  <th>Their match</th>
+                  <th className="num">Gap</th>
                 </tr>
               </thead>
               <tbody>
-                {analysis.keywords.map((row) => (
-                  <>
-                    <tr key={row.term}>
-                      <td>
-                        <button
-                          className="ghost small"
-                          style={{ border: 0, padding: 0, background: "none", fontWeight: 600 }}
-                          onClick={() => setOpenEvidence(openEvidence === row.term ? null : row.term)}
-                          aria-expanded={openEvidence === row.term}
-                        >
-                          {row.term}
-                          {row.weight > 1 ? <span className="hint"> ×{row.weight}</span> : null}
-                        </button>
-                      </td>
-                      <td className="num">{pct(row.score)}</td>
-                      <td className="barcell">
-                        <div className="bar"><span style={{ width: pct(row.score) }} /></div>
-                      </td>
-                      <td><span className={`pill ${row.verdict}`}>{row.verdict}</span></td>
-                      <td className="num">{row.competitorScore === null ? "–" : pct(row.competitorScore)}</td>
-                      <td className="barcell">
-                        {row.competitorScore === null ? null : (
-                          <div className="bar them"><span style={{ width: pct(row.competitorScore) }} /></div>
-                        )}
-                      </td>
-                    </tr>
-                    {openEvidence === row.term && (
-                      <tr key={`${row.term}-evidence`}>
-                        <td colSpan={6}>
-                          <div className="evidence">
-                            {row.evidence ? (
-                              <>
-                                <b>{row.evidence.heading || "Closest passage"}</b> — {row.evidence.text.slice(0, 420)}
-                                {row.evidence.text.length > 420 ? "…" : ""}
-                              </>
-                            ) : (
-                              "No passage to quote."
-                            )}
+                {analysis.keywords.map((row) => {
+                  const gap = row.competitorScore === null ? null : row.competitorScore - row.score;
+                  return (
+                    <>
+                      <tr key={row.term}>
+                        <td>
+                          <button
+                            className="term"
+                            onClick={() => setOpenEvidence(openEvidence === row.term ? null : row.term)}
+                            aria-expanded={openEvidence === row.term}
+                          >
+                            {row.term}
+                            {row.weight > 1 ? <span className="hint"> ×{row.weight}</span> : null}
+                          </button>
+                        </td>
+                        <td>
+                          <div className="score">
+                            <span className="bar"><span style={{ width: pct(row.score) }} /></span>
+                            <b>{pct(row.score)}</b>
                           </div>
                         </td>
+                        <td><span className={`pill ${row.verdict}`}>{row.verdict}</span></td>
+                        <td>
+                          {row.competitorScore === null ? (
+                            <span className="note">–</span>
+                          ) : (
+                            <div className="score">
+                              <span className="bar them"><span style={{ width: pct(row.competitorScore) }} /></span>
+                              <b>{pct(row.competitorScore)}</b>
+                            </div>
+                          )}
+                        </td>
+                        <td className="num">
+                          {gap === null ? "–" : (
+                            <span className={gap >= 0.08 ? "gap-behind" : gap <= -0.02 ? "gap-ahead" : "note"}>
+                              {gap >= 0 ? "+" : ""}
+                              {Math.round(gap * 100)}
+                            </span>
+                          )}
+                        </td>
                       </tr>
-                    )}
-                  </>
-                ))}
+                      {openEvidence === row.term && (
+                        <tr key={`${row.term}-evidence`}>
+                          <td colSpan={5}>
+                            <div className="evidence">
+                              {row.evidence ? (
+                                <>
+                                  <b>{row.evidence.heading || "Closest passage"}</b> — {row.evidence.text.slice(0, 420)}
+                                  {row.evidence.text.length > 420 ? "…" : ""}
+                                </>
+                              ) : (
+                                "No passage to quote."
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </>
+                  );
+                })}
               </tbody>
             </table>
 
@@ -324,15 +339,19 @@ export default function App() {
               <p className="sub">The average of each passage's three best keywords. This is where the page carries a topic and where it coasts.</p>
               <table>
                 <thead>
-                  <tr><th>Passage</th><th className="num">Words</th><th className="num">Score</th><th className="barcell" /><th>Carries</th></tr>
+                  <tr><th>Passage</th><th className="num">Words</th><th>Score</th><th>Carries</th></tr>
                 </thead>
                 <tbody>
                   {[...analysis.sections].sort((a, b) => b.score - a.score).map((section) => (
                     <tr key={section.heading}>
                       <td>{section.heading}</td>
                       <td className="num">{section.words}</td>
-                      <td className="num">{pct(section.score)}</td>
-                      <td className="barcell"><div className="bar"><span style={{ width: pct(section.score) }} /></div></td>
+                      <td>
+                        <div className="score">
+                          <span className="bar"><span style={{ width: pct(section.score) }} /></span>
+                          <b>{pct(section.score)}</b>
+                        </div>
+                      </td>
                       <td className="note">{section.topKeywords.length ? section.topKeywords.join(", ") : "—"}</td>
                     </tr>
                   ))}
